@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Weather</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Weather</h1>
+      <form id="search-form" autocomplete="off">
+        <input type="text" id="city-input" placeholder="Search for a city..." required />
+        <button type="submit">Search</button>
+        <button type="button" id="locate-btn" title="Use my location">📍</button>
+      </form>
+    </header>
+
+    <main id="content">
+      <p id="status" class="status">Search for a city or use your location to see the weather.</p>
+
+      <section id="current-weather" class="current-weather hidden">
+        <h2 id="location-name"></h2>
+        <p id="location-time" class="muted"></p>
+        <div class="current-main">
+          <span id="current-icon" class="icon"></span>
+          <span id="current-temp" class="temp"></span>
+        </div>
+        <p id="current-desc" class="desc"></p>
+        <div class="details">
+          <div><span class="label">Feels like</span><span id="feels-like"></span></div>
+          <div><span class="label">Humidity</span><span id="humidity"></span></div>
+          <div><span class="label">Wind</span><span id="wind"></span></div>
+          <div><span class="label">Precipitation</span><span id="precip"></span></div>
+        </div>
+      </section>
+
+      <section id="forecast" class="forecast hidden">
+        <h3>5-Day Forecast</h3>
+        <div id="forecast-days" class="forecast-days"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
