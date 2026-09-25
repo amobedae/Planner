@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Name · Developer</title>
+    <meta name="description" content="Personal website and project portfolio." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👋</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      // Apply the saved theme before first paint to avoid a flash.
+      try {
+        const t = localStorage.getItem("theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <header class="nav">
+      <a href="#top" class="logo">YN<span>.</span></a>
+      <nav>
+        <button class="menu-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#builds">Builds</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </header>
+
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <p class="eyebrow">Hi, I'm</p>
+        <h1>Your Name</h1>
+        <p class="tagline">I build <span class="typed" data-words="web apps,data projects,voice assistants,things that help people"></span><span class="caret">|</span></p>
+        <p class="intro">
+          Student developer learning in public — JavaScript, Python and everything in between.
+          Here's what I've been making.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#projects">See my projects</a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
+      </section>
+
+      <!-- ============ ABOUT ============ -->
+      <section id="about" class="section reveal">
+        <h2><span>01.</span> About me</h2>
+        <div class="about">
+          <div class="about-text">
+            <p>
+              Write a few sentences about yourself here: where you're from, what you're studying,
+              and what got you into coding.
+            </p>
+            <p>
+              Right now I'm focused on shipping small, useful projects — a planner, a cafe finder,
+              a voice assistant and a data analysis of Amazon's bestsellers — and learning something new
+              from each one.
+            </p>
+          </div>
+          <div class="avatar" aria-hidden="true">🧑🏽‍💻</div>
+        </div>
+      </section>
+
+      <!-- ============ PROJECTS ============ -->
+      <section id="projects" class="section reveal">
+        <h2><span>02.</span> Projects</h2>
+        <div class="filters" role="group" aria-label="Filter projects">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="javascript">JavaScript</button>
+          <button class="chip" data-filter="python">Python</button>
+        </div>
+        <div class="grid" id="project-grid">
+          <article class="project" data-tags="javascript">
+            <div class="project-icon">☕</div>
+            <h3>Cafe Finder</h3>
+            <p>Find cafes near you on a live map with ratings, open-now status and saved favorites, powered by Google Maps data.</p>
+            <ul class="tags"><li>JavaScript</li><li>Google Maps</li><li>Leaflet</li></ul>
+            <a class="link" href="https://github.com/amobedae/Planner/tree/main/projects/cafe-finder" target="_blank" rel="noopener">View code →</a>
+          </article>
+          <article class="project" data-tags="python">
+            <div class="project-icon">🎙️</div>
+            <h3>Voice Virtual Assistant</h3>
+            <p>Talk to an AI assistant: ElevenLabs turns speech into text and replies back into speech, with Claude writing the answers.</p>
+            <ul class="tags"><li>Python</li><li>ElevenLabs</li><li>Claude API</li></ul>
+            <a class="link" href="https://github.com/amobedae/Planner/tree/main/projects/voice-assistant" target="_blank" rel="noopener">View code →</a>
+          </article>
+          <article class="project" data-tags="python">
+            <div class="project-icon">📚</div>
+            <h3>Amazon Bestsellers Analysis</h3>
+            <p>Pandas analysis of Amazon's Top 50 books from 2009–2019: top authors, genre trends, and whether price predicts rating.</p>
+            <ul class="tags"><li>Python</li><li>pandas</li><li>matplotlib</li></ul>
+            <a class="link" href="https://github.com/amobedae/Planner/tree/main/projects/amazon-bestsellers" target="_blank" rel="noopener">View code →</a>
+          </article>
+          <article class="project" data-tags="javascript">
+            <div class="project-icon">🗓️</div>
+            <h3>Daylight Planner</h3>
+            <p>A fast personal planner with day, week and habit views, light and dark themes, all saved locally in the browser.</p>
+            <ul class="tags"><li>React</li><li>TypeScript</li><li>Tailwind</li></ul>
+            <a class="link" href="https://github.com/amobedae/Planner" target="_blank" rel="noopener">View code →</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ CODÉDEX BUILDS ============ -->
+      <section id="builds" class="section reveal">
+        <h2><span>03.</span> Codédex Builds</h2>
+        <p class="section-intro">Projects I've followed along with from <a href="https://www.codedex.io/projects" target="_blank" rel="noopener">Codédex</a>. Add yours here.</p>
+        <ol class="timeline">
+          <li><span class="when">Build 1</span><strong>Build a Cafe Finder</strong> — JavaScript</li>
+          <li><span class="when">Build 2</span><strong>Create a Voice Virtual Assistant</strong> — Python</li>
+          <li><span class="when">Build 3</span><strong>Analyze Best Selling Amazon Books</strong> — Python</li>
+          <li><span class="when">Build 4</span><strong>Create a Personal Website</strong> — HTML / CSS / JS (you're looking at it)</li>
+        </ol>
+      </section>
+
+      <!-- ============ SKILLS ============ -->
+      <section id="skills" class="section reveal">
+        <h2><span>04.</span> Skills</h2>
+        <div class="skills">
+          <div>
+            <h3>Languages</h3>
+            <ul class="pills"><li>JavaScript</li><li>TypeScript</li><li>Python</li><li>HTML</li><li>CSS</li></ul>
+          </div>
+          <div>
+            <h3>Tools &amp; libraries</h3>
+            <ul class="pills"><li>React</li><li>pandas</li><li>matplotlib</li><li>Git &amp; GitHub</li><li>Vite</li></ul>
+          </div>
+          <div>
+            <h3>APIs</h3>
+            <ul class="pills"><li>Google Maps</li><li>ElevenLabs</li><li>Claude</li></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section id="contact" class="section reveal contact">
+        <h2><span>05.</span> Say hello</h2>
+        <p>I'm always up for chatting about code, projects, or opportunities.</p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:you@example.com">Email me</a>
+          <a class="btn" href="https://github.com/amobedae" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Your Name · Built with HTML, CSS &amp; JavaScript</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

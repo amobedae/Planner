@@ -63,3 +63,9 @@ adding new data-driven features.
 
 No backend, no build config beyond Vite's defaults — clone it, tweak it, and
 it's yours.
+
+## More projects
+
+The [`projects/`](projects/) folder has four more builds: a Cafe Finder (JavaScript), a
+Voice Virtual Assistant (Python + ElevenLabs), an Amazon Bestsellers pandas analysis,
+and a Personal Website.

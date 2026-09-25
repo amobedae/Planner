@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cafe Finder</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">☕ <span>Cafe Finder</span></div>
+      <form id="search-form" class="search" autocomplete="off">
+        <input id="search-input" type="search" placeholder="Search a city or neighborhood…" aria-label="Location" />
+        <button type="submit">Search</button>
+      </form>
+      <button id="locate-btn" class="ghost" title="Use my location">📍 Near me</button>
+    </header>
+
+    <main class="layout">
+      <aside class="panel">
+        <div class="controls">
+          <label>
+            Radius
+            <select id="radius">
+              <option value="500">500 m</option>
+              <option value="1000" selected>1 km</option>
+              <option value="2000">2 km</option>
+              <option value="5000">5 km</option>
+            </select>
+          </label>
+          <label>
+            Sort
+            <select id="sort">
+              <option value="distance">Closest</option>
+              <option value="rating">Top rated</option>
+              <option value="name">A–Z</option>
+            </select>
+          </label>
+          <label class="check"><input id="open-now" type="checkbox" /> Open now</label>
+          <label class="check"><input id="favorites-only" type="checkbox" /> ♥ Favorites</label>
+        </div>
+        <p id="status" class="status" role="status">Finding cafes near you…</p>
+        <ul id="results" class="results"></ul>
+        <footer class="source" id="source"></footer>
+      </aside>
+      <section id="map" class="map" aria-label="Map of cafes"></section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="config.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
