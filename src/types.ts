@@ -17,6 +17,7 @@ export type Task = {
   categoryId: string | null;
   done: boolean;
   notes?: string;
+  remindMinutes?: number | null; // minutes before `time` to remind; null = no reminder
   createdAt: number;
 };
 
@@ -41,4 +42,21 @@ export type PlannerData = {
   categories: Category[];
 };
 
-export type View = 'day' | 'week' | 'habits';
+export type View = 'jarvis' | 'day' | 'week' | 'habits' | 'settings';
+
+export type JarvisSettings = {
+  userName: string;
+  morningBriefing: string | null; // HH:mm or null to disable
+  eveningReview: string | null; // HH:mm or null to disable
+  defaultRemindMinutes: number;
+  voice: boolean;
+  apiKey: string; // optional Anthropic API key for full AI mode
+  focusMinutes: number;
+};
+
+export type ChatMessage = {
+  id: string;
+  role: 'user' | 'jarvis';
+  text: string;
+  at: number;
+};

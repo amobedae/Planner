@@ -3,6 +3,7 @@ import { Plus, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { colorMap, colorOptions } from '../lib/colors';
 import { usePlanner } from '../lib/PlannerContext';
+import { useSettings } from '../lib/SettingsContext';
 import type { Priority, Task } from '../types';
 
 type Props = {
@@ -18,8 +19,21 @@ const PRIORITIES: { key: Priority; label: string }[] = [
   { key: 'high', label: 'High' },
 ];
 
+const REMIND_OPTIONS: { value: number | null; label: string }[] = [
+  { value: null, label: 'No reminder' },
+  { value: 0, label: 'At time' },
+  { value: 5, label: '5 min before' },
+  { value: 10, label: '10 min before' },
+  { value: 15, label: '15 min before' },
+  { value: 30, label: '30 min before' },
+  { value: 60, label: '1 hour before' },
+  { value: 120, label: '2 hours before' },
+  { value: 1440, label: '1 day before' },
+];
+
 export function TaskForm({ open, onClose, defaultDate, editingTask }: Props) {
   const { categories, addCategory, addTask, updateTask, deleteTask } = usePlanner();
+  const { settings } = useSettings();
 
   const [title, setTitle] = useState('');
   const [date, setDate] = useState(defaultDate);
@@ -27,6 +41,7 @@ export function TaskForm({ open, onClose, defaultDate, editingTask }: Props) {
   const [priority, setPriority] = useState<Priority>('medium');
   const [categoryId, setCategoryId] = useState<string | null>(categories[0]?.id ?? null);
   const [notes, setNotes] = useState('');
+  const [remindMinutes, setRemindMinutes] = useState<number | null>(settings.defaultRemindMinutes);
   const [creatingCategory, setCreatingCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
 
@@ -39,6 +54,7 @@ export function TaskForm({ open, onClose, defaultDate, editingTask }: Props) {
       setPriority(editingTask.priority);
       setCategoryId(editingTask.categoryId);
       setNotes(editingTask.notes ?? '');
+      setRemindMinutes(editingTask.remindMinutes === undefined ? settings.defaultRemindMinutes : editingTask.remindMinutes);
     } else {
       setTitle('');
       setDate(defaultDate);
@@ -46,15 +62,16 @@ export function TaskForm({ open, onClose, defaultDate, editingTask }: Props) {
       setPriority('medium');
       setCategoryId(categories[0]?.id ?? null);
       setNotes('');
+      setRemindMinutes(settings.defaultRemindMinutes);
     }
     setCreatingCategory(false);
     setNewCategoryName('');
-  }, [open, editingTask, defaultDate, categories]);
+  }, [open, editingTask, defaultDate, categories, settings.defaultRemindMinutes]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
-    const payload = { title, date, time: time || undefined, priority, categoryId, notes: notes || undefined };
+    const payload = { title, date, time: time || undefined, priority, categoryId, notes: notes || undefined, remindMinutes };
     if (editingTask) {
       updateTask(editingTask.id, payload);
     } else {
@@ -136,6 +153,23 @@ export function TaskForm({ open, onClose, defaultDate, editingTask }: Props) {
                 />
               </label>
             </div>
+
+            {time && (
+              <label className="mb-4 block">
+                <span className="mb-1 block text-xs font-medium text-ink-soft">Jarvis reminder</span>
+                <select
+                  value={remindMinutes === null ? 'none' : String(remindMinutes)}
+                  onChange={(e) => setRemindMinutes(e.target.value === 'none' ? null : Number(e.target.value))}
+                  className="w-full rounded-lg border border-line bg-paper px-3 py-2 text-sm text-ink focus:border-brand"
+                >
+                  {REMIND_OPTIONS.map((o) => (
+                    <option key={o.label} value={o.value === null ? 'none' : String(o.value)}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
 
             <div className="mb-4">
               <span className="mb-1 block text-xs font-medium text-ink-soft">Priority</span>

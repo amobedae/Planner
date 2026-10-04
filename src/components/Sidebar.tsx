@@ -1,4 +1,5 @@
-import { CalendarDays, LayoutGrid, Moon, Sparkles, Sun, Target, X } from 'lucide-react';
+import { CalendarDays, LayoutGrid, Moon, Settings, Sparkles, Sun, Target, X } from 'lucide-react';
+import { JarvisOrb } from './JarvisOrb';
 import { usePlanner } from '../lib/PlannerContext';
 import { todayISO } from '../lib/date';
 import { useTheme } from '../lib/ThemeContext';
@@ -15,10 +16,12 @@ type Props = {
   onClose: () => void;
 };
 
-const NAV_ITEMS: { key: View; label: string; icon: typeof CalendarDays }[] = [
+export const NAV_ITEMS: { key: View; label: string; icon: typeof CalendarDays }[] = [
+  { key: 'jarvis', label: 'Jarvis', icon: Sparkles },
   { key: 'day', label: 'Day', icon: CalendarDays },
   { key: 'week', label: 'Week', icon: LayoutGrid },
   { key: 'habits', label: 'Habits', icon: Target },
+  { key: 'settings', label: 'Settings', icon: Settings },
 ];
 
 export function Sidebar({ view, onViewChange, selectedDate, onSelectDate, open, onClose }: Props) {
@@ -41,16 +44,14 @@ export function Sidebar({ view, onViewChange, selectedDate, onSelectDate, open, 
       )}
       <aside
         className={[
-          'fixed inset-y-0 left-0 z-40 flex w-72 shrink-0 flex-col border-r border-line bg-paper-raised p-5 transition-transform duration-300 lg:sticky lg:top-0 lg:h-svh lg:translate-x-0',
+          'fixed inset-y-0 left-0 z-40 flex w-72 shrink-0 flex-col overflow-y-auto border-r border-line bg-paper-raised p-5 pt-[max(1.25rem,env(safe-area-inset-top))] transition-transform duration-300 lg:sticky lg:top-0 lg:h-svh lg:translate-x-0',
           open ? 'translate-x-0' : '-translate-x-full',
         ].join(' ')}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-brand-ink">
-              <Sparkles size={16} />
-            </span>
-            <span className="font-display text-xl font-semibold tracking-tight text-ink">Daylight</span>
+            <JarvisOrb size={32} />
+            <span className="font-display text-xl font-semibold tracking-tight text-ink">Jarvis</span>
           </div>
           <button
             onClick={onClose}

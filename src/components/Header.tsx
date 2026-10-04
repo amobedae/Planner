@@ -16,6 +16,8 @@ export function Header({ view, selectedDate, onSelectDate, search, onSearchChang
   const step = view === 'week' ? 7 : 1;
 
   const title = () => {
+    if (view === 'jarvis') return 'Jarvis';
+    if (view === 'settings') return 'Settings';
     if (view === 'habits') return 'Habits & goals';
     if (view === 'week') {
       const days = weekDays(selectedDate);
@@ -25,13 +27,15 @@ export function Header({ view, selectedDate, onSelectDate, search, onSearchChang
   };
 
   const subtitle = () => {
+    if (view === 'jarvis') return formatLong(todayISO());
+    if (view === 'settings') return 'Make Jarvis yours';
     if (view === 'habits') return 'Build streaks that stick';
     if (view === 'week') return 'This week';
     return formatMonthYear(selectedDate);
   };
 
   return (
-    <header className="sticky top-0 z-20 border-b border-line bg-paper/85 px-4 py-4 backdrop-blur-md sm:px-8">
+    <header className="sticky top-0 z-20 border-b border-line bg-paper/85 px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] backdrop-blur-md sm:px-8 sm:pb-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <button
@@ -45,7 +49,7 @@ export function Header({ view, selectedDate, onSelectDate, search, onSearchChang
             <h1 className="font-display text-2xl font-semibold text-ink sm:text-3xl">{title()}</h1>
             <p className="text-xs text-ink-faint sm:text-sm">{subtitle()}</p>
           </div>
-          {view !== 'habits' && (
+          {(view === 'day' || view === 'week') && (
             <div className="ml-1 flex items-center gap-1">
               <button
                 onClick={() => onSelectDate(addDays(selectedDate, -step))}
@@ -74,6 +78,7 @@ export function Header({ view, selectedDate, onSelectDate, search, onSearchChang
         </div>
 
         <div className="flex items-center gap-2">
+          {view !== 'jarvis' && view !== 'settings' && (
           <div className="relative">
             <Search size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" />
             <input
@@ -92,6 +97,7 @@ export function Header({ view, selectedDate, onSelectDate, search, onSearchChang
               </button>
             )}
           </div>
+          )}
           <button
             onClick={onAddTask}
             className="flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-brand-ink shadow-soft transition-transform hover:scale-[1.03] active:scale-[0.98]"

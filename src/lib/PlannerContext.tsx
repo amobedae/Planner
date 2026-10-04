@@ -5,13 +5,14 @@ import { todayISO } from './date';
 import { createId } from './id';
 import { useLocalStorage } from './storage';
 
-type NewTaskInput = {
+export type NewTaskInput = {
   title: string;
   date: string;
   time?: string;
   priority: Priority;
   categoryId: string | null;
   notes?: string;
+  remindMinutes?: number | null;
 };
 
 type PlannerContextValue = {
@@ -19,7 +20,7 @@ type PlannerContextValue = {
   notes: DailyNote[];
   habits: Habit[];
   categories: Category[];
-  addTask: (input: NewTaskInput) => void;
+  addTask: (input: NewTaskInput) => Task;
   updateTask: (id: string, patch: Partial<Task>) => void;
   toggleTask: (id: string) => void;
   deleteTask: (id: string) => void;
@@ -27,9 +28,9 @@ type PlannerContextValue = {
   setNote: (date: string, content: string) => void;
   getNote: (date: string) => string;
   addCategory: (name: string, color: Category['color']) => Category;
-  addHabit: (name: string, color: Category['color']) => void;
+  addHabit: (name: string, color: Category['color']) => Habit;
   deleteHabit: (id: string) => void;
-  toggleHabitDate: (id: string, date: string) => void;
+  toggleHabitDate: (id: string, date: string, value?: boolean) => void;
 };
 
 const PlannerContext = createContext<PlannerContextValue | null>(null);
@@ -60,9 +61,11 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
           categoryId: input.categoryId,
           done: false,
           notes: input.notes,
+          remindMinutes: input.remindMinutes,
           createdAt: Date.now(),
         };
         setTasks((prev) => [...prev, task]);
+        return task;
       },
 
       updateTask: (id, patch) => {
@@ -106,17 +109,19 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
           completedDates: [],
         };
         setHabits((prev) => [...prev, habit]);
+        return habit;
       },
 
       deleteHabit: (id) => {
         setHabits((prev) => prev.filter((h) => h.id !== id));
       },
 
-      toggleHabitDate: (id, date) => {
+      toggleHabitDate: (id, date, value) => {
         setHabits((prev) =>
           prev.map((h) => {
             if (h.id !== id) return h;
             const has = h.completedDates.includes(date);
+            if (value !== undefined && value === has) return h;
             return {
               ...h,
               completedDates: has

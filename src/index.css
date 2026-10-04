@@ -174,3 +174,33 @@ select {
   background-image: radial-gradient(circle at 1px 1px, var(--line-soft) 1px, transparent 0);
   background-size: 22px 22px;
 }
+
+@keyframes orb-breathe {
+  0%,
+  100% {
+    transform: scale(0.92);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.15;
+  }
+}
+.animate-orb-breathe {
+  animation: orb-breathe 3.2s ease-in-out infinite;
+}
+
+/* Native-app feel on phones */
+html {
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+/* iOS zooms into inputs under 16px; keep them at 16px on small screens. */
+@media (max-width: 640px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}

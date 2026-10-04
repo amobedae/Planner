@@ -1,4 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { BottomNav } from './components/BottomNav';
+import { JarvisView } from './components/JarvisView';
+import { SettingsView } from './components/SettingsView';
+import { Toasts } from './components/Toasts';
+import { JarvisProvider, useJarvis } from './lib/jarvis/JarvisContext';
+import { SettingsProvider } from './lib/SettingsContext';
 import { DayView } from './components/DayView';
 import { Header } from './components/Header';
 import { HabitsView } from './components/HabitsView';
@@ -12,7 +18,13 @@ import { todayISO } from './lib/date';
 import type { Task, View } from './types';
 
 function PlannerApp() {
-  const [view, setView] = useState<View>('day');
+  const [view, setView] = useState<View>('jarvis');
+  const { openRequest } = useJarvis();
+
+  // Tapping a reminder notification brings you to Jarvis.
+  useEffect(() => {
+    if (openRequest) setView('jarvis');
+  }, [openRequest]);
   const [selectedDate, setSelectedDate] = useState(todayISO());
   const [search, setSearch] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -34,7 +46,7 @@ function PlannerApp() {
 
   const handleSelectDate = (date: string) => {
     setSelectedDate(date);
-    if (view === 'habits') setView('day');
+    if (view !== 'day' && view !== 'week') setView('day');
   };
 
   return (
@@ -59,8 +71,12 @@ function PlannerApp() {
           onAddTask={() => openNewTaskForm()}
         />
 
-        <main className="px-4 py-6 sm:px-8">
-          {search.trim() ? (
+        <main className="px-4 pb-28 pt-6 sm:px-8 lg:pb-8">
+          {view === 'jarvis' ? (
+            <JarvisView onOpenSettings={() => setView('settings')} />
+          ) : view === 'settings' ? (
+            <SettingsView />
+          ) : search.trim() ? (
             <SearchResults query={search} onEditTask={openEditTaskForm} />
           ) : view === 'day' ? (
             <DayView date={selectedDate} onEditTask={openEditTaskForm} onAddTask={() => openNewTaskForm()} />
@@ -80,6 +96,8 @@ function PlannerApp() {
         </main>
       </div>
 
+      <BottomNav view={view} onViewChange={(v) => { setSearch(''); setView(v); }} />
+      <Toasts />
       <TaskForm open={formOpen} onClose={() => setFormOpen(false)} defaultDate={formDate} editingTask={editingTask} />
     </div>
   );
@@ -88,9 +106,13 @@ function PlannerApp() {
 function App() {
   return (
     <ThemeProvider>
-      <PlannerProvider>
-        <PlannerApp />
-      </PlannerProvider>
+      <SettingsProvider>
+        <PlannerProvider>
+          <JarvisProvider>
+            <PlannerApp />
+          </JarvisProvider>
+        </PlannerProvider>
+      </SettingsProvider>
     </ThemeProvider>
   );
 }

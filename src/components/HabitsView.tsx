@@ -7,7 +7,7 @@ import type { CategoryColor, Habit } from '../types';
 
 const GRID_DAYS = 35;
 
-function currentStreak(habit: Habit): number {
+export function currentStreak(habit: Habit): number {
   const done = new Set(habit.completedDates);
   let streak = 0;
   let cursor = todayISO();

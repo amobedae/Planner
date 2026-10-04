@@ -1,5 +1,5 @@
 {
-  "name": "daylight-planner",
+  "name": "jarvis-assistant",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,9 +7,19 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync": "npm run build && cap sync",
+    "android": "npm run sync && cap open android",
+    "ios": "npm run sync && cap open ios",
+    "assets": "capacitor-assets generate --android --ios --iconBackgroundColor '#17151f' --splashBackgroundColor '#17151f' --splashBackgroundColorDark '#17151f'"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/ios": "^8.5.2",
+    "@capacitor/local-notifications": "^8.3.1",
     "@tailwindcss/vite": "^4.3.3",
     "date-fns": "^4.4.0",
     "framer-motion": "^13.1.1",
@@ -19,6 +29,8 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.5.2",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
